@@ -1,23 +1,23 @@
 services:
   backend:
-    build:
-      context: ./youtube-stats-backend
-      dockerfile: Dockerfile
+    image: youtube-stats-backend
     container_name: backend-container
     ports:
       - "7543:7543"
     environment:
       NODE_ENV: development
     restart: always
+    depends_on:
+      - mongodb
 
   frontend:
-    build:
-      context: ./youtube-stats
-      dockerfile: Dockerfile
+    image: youtube-stats-frontend
     container_name: frontend-container
     ports:
       - "5173:5173"
     restart: always
+    depends_on:
+      - backend
 
   mongodb:
     image: mongo:latest
