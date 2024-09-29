@@ -1,0 +1,13 @@
+
+.git
+.vscode
+.vs
+.history
+node_modules
+*/node_modules
+node_modules
+/build
+.env
+dist
+*/dist
+logs
