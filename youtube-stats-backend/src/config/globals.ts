@@ -5,6 +5,9 @@ import EnvVar from 'dotenv';
 import { Environment } from '@customTypes/index';
 EnvVar.config({ path: `.env.${process.env.NODE_ENV}` });
 
+
+
+
 let globals: {
     /**
      * Server configurations

@@ -26,6 +26,7 @@ export default class TestCoreRoutes {
         this.router.delete('/table', this.controller.deleteTable);
         this.router.delete('/', this.controller.deleteRow);
         this.router.post('/upload-video', this.controller.uploadVideo);
-        this.router.get('/proxies', this.controller.getProxies)
+        this.router.get('/proxies', this.controller.getProxies);
+        this.router.post('/bulk-upload', this.controller.bulkUploadVideo);
     }
 }

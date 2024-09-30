@@ -7,6 +7,9 @@ import { AnyBulkWriteOperation } from 'mongoose';
 import YoutubeService from '@services/youtubeapi';
 import { IStat } from '@models/components/stats/types';
 import { ProxyManager } from '@services/proxyManager';
+import { IBulkVideoUpload } from '@customTypes/index';
+
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 interface ChannelInfo {
     email: string;
@@ -375,6 +378,65 @@ export default class TestController {
             const proxies = this.proxyManager.getRandomProxy();
 
             return prepareSuccessResponse(res, 'row deleted successfully', proxies, 'read');
+        } catch (err) {
+            return next(err);
+        }
+    }
+
+    /**
+     * Get All stats
+     *
+     * @param {Request} req Express request
+     * @param {Response} res Express response
+     * @param {NextFunction} next Express next
+     * @returns {Promise<Response | void>} Returns HTTP response
+     */
+    @bind
+    public async bulkUploadVideo(
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ): Promise<Response | void> {
+        try {
+            const { videos }: { videos: IBulkVideoUpload[] } = req.body;
+
+            for (const v of videos) {
+                let tableName = '';
+                let baseId = '';
+                const regex = /https:\/\/airtable\.com\/([^/]+)\/([^/]+)/;
+
+                // Apply the regex to the URL
+                const match = v.stat?.airtableLink.match(regex);
+
+                if (match && match.length >= 3) {
+                    baseId = match[1];
+                    tableName = match[2];
+                }
+
+                console.log(
+                    v.videoUrl,
+                    v.title,
+                    v.description,
+                    v.stat?.airtableToken || '',
+                    baseId,
+                    tableName
+                );
+
+                
+
+                await this.youtubeService.addRecordToAirtable(
+                    v.videoUrl,
+                    v.title,
+                    v.description,
+                    v.stat.airtableToken,
+                    baseId,
+                    tableName
+                );
+
+                await delay(5000)
+            }
+
+            return prepareSuccessResponse(res, 'row deleted successfully', '', 'read');
         } catch (err) {
             return next(err);
         }

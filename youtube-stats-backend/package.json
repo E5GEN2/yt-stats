@@ -8,6 +8,7 @@
         "start": "node dist/index.js",
         "prestart": "npm run build",
         "dev": "cross-env NODE_ENV=development nodemon",
+        "docker": "cross-env NODE_ENV=docker nodemon",
         "prod": "cross-env NODE_ENV=production REACT_APP_ENVIRONMENT=production node dist/index.js"
     },
     "author": "Sarab",

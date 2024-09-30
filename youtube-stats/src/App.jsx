@@ -22,6 +22,7 @@ import { useAppDispatch } from "./appRedux/reducers/store";
 import { useSelector } from "react-redux";
 import { StatsSelector } from "./appRedux/reducers";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
+import CsvUpload from "./components/CsvUpload";
 
 const columns = [
   {
@@ -206,44 +207,48 @@ function App() {
 
   return (
     <>
-      <Input
-        ref={inputRef}
-        placeholder="Enter api key"
-        style={{ maxWidth: "500px" }}
-        value={apiKey}
-        onChange={(e) => {
-          setApiKey(e.target.value);
-        }}
-      />
+      <Space>
+        <Input
+          ref={inputRef}
+          placeholder="Enter api key"
+          style={{ maxWidth: "500px" }}
+          value={apiKey}
+          onChange={(e) => {
+            setApiKey(e.target.value);
+          }}
+        />
 
-      <ImportFile apiKey={apiKey} />
-      <Button
-        disabled={apiKey.length === 0}
-        onClick={async () => {
-          setLoading(true);
-          await dispatch(
-            updateStats({
-              apiKey: inputRef.current.input.value,
-              statsToUpdate: apiStats,
-            })
-          );
-          setLoading(false);
-        }}
-        loading={loading}
-      >
-        Update All
-      </Button>
+        <ImportFile apiKey={apiKey} />
+        <Button
+          disabled={apiKey.length === 0}
+          onClick={async () => {
+            setLoading(true);
+            await dispatch(
+              updateStats({
+                apiKey: inputRef.current.input.value,
+                statsToUpdate: apiStats,
+              })
+            );
+            setLoading(false);
+          }}
+          loading={loading}
+        >
+          Update All
+        </Button>
 
-      <Button
-        onClick={async () => {
-          setDeleteTableLoading(true);
-          await dispatch(deleteTable());
-          setDeleteTableLoading(false);
-        }}
-        loading={deleteTableLoading}
-      >
-        Delete All
-      </Button>
+        <Button
+          onClick={async () => {
+            setDeleteTableLoading(true);
+            await dispatch(deleteTable());
+            setDeleteTableLoading(false);
+          }}
+          loading={deleteTableLoading}
+        >
+          Delete All
+        </Button>
+
+        <CsvUpload />
+      </Space>
 
       {fetchLoading ? (
         <Skeleton />

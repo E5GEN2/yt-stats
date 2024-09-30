@@ -110,3 +110,19 @@ export const uploadVideo = createAsyncThunk(
     }
   }
 );
+
+export const uploadBulkVideo = createAsyncThunk(
+  "stats/uploadMass",
+  async (data, { dispatch }) => {
+    try {
+      console.log("data is ", data);
+      const res = await BackendInstance.post(`stats/bulk-upload`, {
+        videos: data,
+      });
+      return true;
+    } catch (err) {
+      console.log("error occurred ", err);
+      return false;
+    }
+  }
+);
