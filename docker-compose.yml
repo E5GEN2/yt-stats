@@ -3,7 +3,7 @@ services:
     image: youtube-stats-backend
     container_name: backend-container
     ports:
-      - "7543:7543"
+      - "7544:7543"
     environment:
       NODE_ENV: development
     restart: always

@@ -5,13 +5,13 @@ Build the docker images:
 1. Build the frontend image
 Navigate to the `youtube-stats` directory and run:
 ```
-docker build -t youtube-stats-frontend
+docker build -t youtube-stats-frontend .
 ```
 2. Build the backend image
 
 Navigate to the `youtube-stats-backend` directory and run:
 ```
-docker build -t youtube-stats-backend
+docker build -t youtube-stats-backend .
 ```
 
 ## Start all services
