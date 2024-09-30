@@ -3,7 +3,7 @@ services:
     image: youtube-stats-backend
     container_name: backend-container
     ports:
-      - "7544:7543"
+      - "3025:3025"
     environment:
       NODE_ENV: development
     restart: always
@@ -14,7 +14,7 @@ services:
     image: youtube-stats-frontend
     container_name: frontend-container
     ports:
-      - "5173:5173"
+      - "3024:3024"
     restart: always
     depends_on:
       - backend
@@ -23,7 +23,7 @@ services:
     image: mongo:latest
     container_name: mongodb
     ports:
-      - "27018:27017"
+      - "3026:27017"
     volumes:
       - mongodb_data:/data/db
     restart: always
